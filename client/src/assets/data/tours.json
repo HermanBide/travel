@@ -29,7 +29,7 @@
       "title": "Snowy Mountains, Thailand",
       "city": "Bangkok",
       "address": "Somewhere in Thailand",
-      "distance": 500,
+      "distance": 6500,
       "price": 99,
       "maxGroupSize": 8,
       "desc": "this is the description",
@@ -42,7 +42,7 @@
       "title": "Beautiful Sunrise, Thailand",
       "city": "Phuket",
       "address": "Somewhere in Thailand",
-      "distance": 500,
+      "distance": 6500,
       "price": 99,
       "maxGroupSize": 8,
       "desc": "this is the description",
@@ -55,7 +55,7 @@
       "title": "Nusa Pendia Bali, Indonesia",
       "city": "Bali",
       "address": "Somewhere in Indonesia",
-      "distance": 500,
+      "distance": 6500,
       "price": 99,
       "maxGroupSize": 8,
       "desc": "this is the description",
@@ -68,7 +68,7 @@
       "title": "Cherry Blossoms Spring",
       "city": "Tokyo",
       "address": "Somewhere in Japan",
-      "distance": 500,
+      "distance": 6500,
       "price": 99,
       "maxGroupSize": 8,
       "desc": "this is the description",
@@ -78,23 +78,23 @@
       "featured": true
     },
     {
-      "title": "Holmen Lofoten, France",
+      "title": "Lourve, France",
       "city": "Paris",
       "address": "Somewhere in France",
-      "distance": 500,
+      "distance": 6500,
       "price": 99,
       "maxGroupSize": 8,
       "desc": "this is the description",
       "reviews": [],
   
-      "photo": "/tour-images/tour-img07.jpg",
+      "photo": "/tour-images/FRA-img.jpg",
       "featured": true
     },
     {
       "title": "Snowy Mountains, Thailand",
       "city": "Bangkok",
       "address": "Somewhere in Thailand",
-      "distance": 500,
+      "distance": 6500,
       "price": 99,
       "maxGroupSize": 8,
       "desc": "this is the description",
@@ -107,7 +107,7 @@
       "title": "Jaflong, Sylhet",
       "city": "Sylhet",
       "address": "Somewhere in Sylhet",
-      "distance": 100,
+      "distance": 5100,
       "price": 99,
       "maxGroupSize": 5,
       "desc": "this is the description",
@@ -120,13 +120,94 @@
       "title": "Cox's Bazar Sea Beach",
       "city": "Chittagong",
       "address": "Somewhere in Chittagong",
-      "distance": 500,
+      "distance": 4500,
       "price": 99,
       "maxGroupSize": 8,
       "desc": "this is the description",
       "reviews": [],
   
       "photo": "/tour-images/tour-img09.jpg",
+      "featured": false
+    },
+    {
+      "title": "Brooklyn Island",
+      "city": "New York City",
+      "address": "Somewhere in brooklyn",
+      "distance": 1500,
+      "price": 99,
+      "maxGroupSize": 8,
+      "desc": "this is the description",
+      "reviews": [],
+  
+      "photo": "/tour-images/NYC-img.jpg",
+      "featured": false
+    },
+    {
+      "title": "Santa monica pier",
+      "city": "Los Angeles",
+      "address": "Somewhere in santa monica",
+      "distance": 300,
+      "price": 99,
+      "maxGroupSize": 8,
+      "desc": "this is the description",
+      "reviews": [],
+  
+      "photo": "/tour-images/Cal.jpg",
+      "featured": false
+    },
+    {
+      "title": "San diego beach",
+      "city": "San Diego",
+      "address": "Somewhere in San Diego",
+      "distance": 500,
+      "price": 99,
+      "maxGroupSize": 8,
+      "desc": "this is the description",
+      "reviews": [],
+  
+      "photo": "/tour-images/Cal01.jpg",
+      "featured": false
+    },
+
+    {
+      "title": "Acra pier",
+      "city": "Ghana",
+      "address": "Somewhere in Acra",
+      "distance": 3500,
+      "price": 99,
+      "maxGroupSize": 8,
+      "desc": "this is the description",
+      "reviews": [],
+  
+      "photo": "/tour-images/Ghana-img.jpg",
+      "featured": false
+    },
+
+
+    {
+      "title": "Britain Bridge",
+      "city": "UK",
+      "address": "Somewhere in london",
+      "distance": 3500,
+      "price": 99,
+      "maxGroupSize": 8,
+      "desc": "this is the description",
+      "reviews": [],
+  
+      "photo": "/tour-images/GBR-img01.jpg",
+      "featured": false
+    },
+    {
+      "title": "Golden Gate bridge",
+      "city": "San francisco",
+      "address": "Somewhere in sf",
+      "distance": 1500,
+      "price": 99,
+      "maxGroupSize": 8,
+      "desc": "this is the description",
+      "reviews": [],
+  
+      "photo": "/tour-images/Cal02.jpg",
       "featured": false
     }
   ]
