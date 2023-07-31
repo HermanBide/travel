@@ -66,9 +66,9 @@ const SearchBar = () => {
               <input type="number" placeholder="0" ref={maxGroupSizeRef} />
             </div>
           </FormGroup>
-          <button className="search__icon" type="button" onClick={searchHandler}>
+          <button className="search__icon" type="submit" onClick={searchHandler}>
             <div className="icon-search">
-              <i className="ri-search-line"></i>
+              <i className="ri-search-line" />
             </div>
           </button>
         </Form>

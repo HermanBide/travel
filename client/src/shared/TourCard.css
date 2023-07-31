@@ -25,23 +25,23 @@
     border-radius: 3px 0 0 0;
 }
 
-.card__top span {
+.card__top span i{
     color: var(--primary-color);
 }
 
 .tour__rating {
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: var(--text-color);
 }
 
 .tour__location {
     color: var(--heading-color);
     font-weight: 500;
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
 .tour__rating i, .tour__location i { 
-    font-size: .9rem;
+    font-size: 1rem;
 }
 
 .tour_title {
@@ -53,7 +53,7 @@
 .tour__title a{
     text-decoration: none;
     color: var(--heading-color);
-    transition: 3s
+    transition: 0.3s
 }
 
 .tour__title a:hover {

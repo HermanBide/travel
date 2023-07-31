@@ -13,6 +13,7 @@ const Tours = () => {
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(1);
   const { data: tours, loading, error  } = useFetch(`${BASE_URL}/tours?page=${pageCount}&setPage=${setPageCount}`);
+  console.log("TOURS CITY",tours)
   const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const Tours = () => {
   }, [page, tourCount, tours]);
 
   return (
-    <>
+       <>
       <CommonSection title={"All Tours"} />
       <section>
         <Container>
@@ -35,7 +36,7 @@ const Tours = () => {
         <Container>
         {loading && <h4 className="text-center pt-5">Loading...</h4>}
         {error && <h4 className="text-center pt-5">{error}</h4>}
-        { !loading && !error && 
+        {/* { !loading && !error &&  */}
           <Row>
             {tours?.map((tour) => (
               <Col lg="3" md="6" sm="6" className='mb-4' key={tour._id}>
@@ -43,7 +44,7 @@ const Tours = () => {
               </Col>
             ))}
 
-            <col lg="12">
+            <Col lg="12">
               <div className="pagination  d-flex align-items-center justify-content-center  mt-4 gap-3">
                 {[...Array(pageCount).keys()].map((number) => (
                   <span
@@ -55,9 +56,9 @@ const Tours = () => {
                   </span>
                 ))}
               </div>
-            </col>
+            </Col>
           </Row>
-        }
+        {/* } */}
         </Container>
       </section>
       <section className="pt-0">

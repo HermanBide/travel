@@ -44,7 +44,7 @@ const Register = () => {
             <div className='login__container'>
               <div className='login__header'>
                 <h2>Login</h2>
-                <i class='ri-user-fill'></i>
+                <i className='ri-user-fill' />
               </div>
               <Form className='login__form' onSubmit={handleSubmit}>
                 <FormGroup>
