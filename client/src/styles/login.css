@@ -1,0 +1,111 @@
+:root {
+    --primary-color: #3c1642;
+    --secondary-color: #1dd3b0;
+    --heading-color: #086375;
+    --text-color: #264653;
+    --font-name: "Montserrat", sans-serif;
+    --subtitle-font-name: "Island Moments", cursive;
+  }
+
+
+.login__section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+  }
+  
+  .login__container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .login__header h2 {
+    font-family: var(--font-name);
+    color: var(--heading-color);
+    margin: 0;
+  }
+  
+  .login__header img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  label {
+    font-family: var(--font-name);
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: var(--text-color);
+  }
+  
+  /* button {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--font-name);
+    width: 100%;
+  } */
+  
+
+
+  .login__btn {
+    background-color: #1dd3b0;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--font-name);
+    width: 100%;
+  }
+
+  .login__btn:hover {
+    background: #0f4c5c;
+  }
+  
+  .login__footer {
+    margin-top: 20px;
+  }
+  
+  .login__footer p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-color);
+  }
+  
+  .login__footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  .login__footer a:hover {
+    text-decoration: underline;
+  }
+
+  
+  
+  
+  
+  
+  
+  
