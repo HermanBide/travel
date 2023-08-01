@@ -8,23 +8,21 @@ import { Container, Row, Col } from "reactstrap";
 
 import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
-import TourDetails from "./TourDetails";
 
 const Tours = () => {
-  const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(1);
-  const { data: tours, loading, error  } = useFetch(`${BASE_URL}/tours?page=${pageCount}&setPage=${setPageCount}`);
-  console.log("TOURS CITY",tours)
+  const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}`);
   const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`);
 
+  const toursPerPage = 8;
+  const pageCount = Math.ceil(tourCount / toursPerPage);
+
   useEffect(() => {
-    const pages = Math.ceil(tourCount / 8);
-    setPageCount(pages);
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   }, [page, tourCount, tours]);
 
   return (
-       <>
+    <>
       <CommonSection title={"All Tours"} />
       <section>
         <Container>
@@ -35,38 +33,32 @@ const Tours = () => {
       </section>
       <section className="pt-0">
         <Container>
-        {loading && <h4 className="text-center pt-5">Loading...</h4>}
-        {error && <h4 className="text-center pt-5">{error}</h4>}
-        { !loading && !error && 
-          <Row>
-            {tours?.map((tour) => (
-              <Col lg="3" md="6" sm="6" className='mb-4' key={tour._id}>
-                <TourCard tour={tour} />
-              </Col>
-            ))}
+          {loading && <h4 className="text-center pt-5">Loading...</h4>}
+          {error && <h4 className="text-center pt-5">{error}</h4>}
+          {!loading && !error && Array.isArray(tours) && ( // Check if tours is an array before mapping
+            <Row>
+              {tours.map((tour) => (
+                <Col lg="3" md="6" sm="6" className="mb-4" key={tour._id}>
+                  <TourCard tour={tour} />
+                </Col>
+              ))}
 
-            <Col lg="12">
-              <div className="pagination  d-flex align-items-center justify-content-center  mt-4 gap-3">
-                {[...Array(pageCount).keys()].map((number) => (
-                  <span
-                    key={number}
-                    
-                    onClick={() => setPage(number)}
-                    className={page === number ? "active__page" : ""}
-                  >
-                    {number + 1}
-                  </span>
-                ))}
-              </div>
-            </Col>
-          </Row>
-        }
+              <Col lg="12">
+                <div className="pagination d-flex align-items-center justify-content-center mt-4 gap-3">
+                  {[...Array(pageCount).keys()].map((number) => (
+                    <span
+                      key={number}
+                      onClick={() => setPage(number + 1)}
+                      className={page === number + 1 ? "active__page" : ""}
+                    >
+                      {number + 1}
+                    </span>
+                  ))}
+                </div>
+              </Col>
+            </Row>
+          )}
         </Container>
-      </section>
-      <section className="pt-0">
-                  <Container>
-                    {!loading && !error }
-                  </Container>
       </section>
       <NewsLetter />
     </>

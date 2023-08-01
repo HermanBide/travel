@@ -13,9 +13,10 @@ export const createBooking = async (req, res) => {
         data: savedBooking,
       });
   } catch (error) {
+    console.log(error)
     res
       .status(500)
-      .json({ success: false, message: "Failed to book tour. try again!" });
+      .json({ success: false, message: "Failed to book tour. try again!", error: error.message });
   }
 };
 
@@ -32,9 +33,10 @@ export const getBooking = async (req, res) => {
           data: book,
         });
     } catch (error) {
+      console.log(error)
         res
         .status(500)
-        .json({ success: false, message: "Could not find book" }); 
+        .json({ success: false, message: "Could not find book", error: error.message }); 
     }
 }
 
@@ -49,8 +51,9 @@ export const getAllBooking = async (req, res) => {
           data: books,
         });
     } catch (error) {
+      console.log(error)
         res
         .status(500)
-        .json({ success: false, message: "Could not find book" }); 
+        .json({ success: false, message: "Could not find book", error: error.message }); 
     }
 }

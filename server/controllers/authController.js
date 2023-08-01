@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export const register = async (req, res) => {
     try {
@@ -20,24 +21,39 @@ export const register = async (req, res) => {
 
 
   export const login = async (req, res) => {
-    try {
-      const { email } = req.body;
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
-      if (!isPasswordValid) {
-        return res.status(401).json({ message: "Invalid password" });
-      }  
-      const { password, role, ...rest } = user._doc
-      const token = jwt.sign({id:user._id, role:user.role}, process.env.JWT_SECRET_KEY, { expiresIn: "15d"});
+  try {
+    const { email, password: inputPassword } = req.body; // Renamed 'password' to 'inputPassword'
+    const user = await User.findOne({ email });
 
-      res.cookie('accessToken', token, {
-        httpOnly: true,
-        expires:token.expiresIn
-      }).status(200).json({ success: true, token, message: "Successfully logged in", data: {...rest}, role });
-    } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to login, try again" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  };
+
+    const isPasswordValid = await bcrypt.compare(inputPassword, user.password); // Renamed 'password' to 'inputPassword'
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
+    const { password, role, ...rest } = user._doc;
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "15d" }
+    );
+
+    res.cookie("accessToken", token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // 15 days
+    }).status(200).json({
+      success: true,
+      token,
+      message: "Successfully logged in",
+      data: { ...rest },
+      role,
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ success: false, message: "Failed to login, try again", error: error.message });
+  }
+};

@@ -18,6 +18,18 @@ const TourDetails = () => {
 
   const { data: tour, loading, error  } = useFetch(`${BASE_URL}/tours/${id}`);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [tour]);
+
+  if (loading) {
+    return <h4 className="text-center pt-5">Loading...</h4>;
+  }
+
+  if (error || !tour) {
+    return <h4 className="text-center pt-5">Error loading tour details</h4>;
+  }
+
   const {
     photo,
     title,
@@ -46,7 +58,7 @@ const TourDetails = () => {
         username:user?.username,
         reviewText, rating:tourRating
       }
-      const res = await fetch(`${BASE_URL}/review/${id}`, {
+      const res = await fetch(`${BASE_URL}/reviews/${id}`, {
         method: 'post',
         headers: {
           'content-type': 'application/json'
@@ -65,10 +77,8 @@ const TourDetails = () => {
     // alert(`${reviewText}, ${tourRating}`);
   };
 
+  const validAvgRating = isNaN(avgRating) ? 0 : avgRating;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [tour]);
 
   return (
     <>
@@ -85,11 +95,9 @@ const TourDetails = () => {
                 <h2>{title}</h2>
                 <div className="d-flex align-items-center gap-5">
                   <span className="tour__rating d-flex align-items-center gap-1">
-                    <i
-                      class="ri-star-s-fill"
-                      style={{ color: "var(--secondary-color)" }}
-                    ></i>{" "}
-                    {calculateAvgRating === 0 ? null : avgRating}
+                    <i class="ri-star-s-fill"
+                    style={{ color: "var(--secondary-color)" }} />{" "}
+                    {validAvgRating === 0 ? null : validAvgRating}
                     {totalRating === 0 ? (
                       "Not rated"
                     ) : (
@@ -98,26 +106,26 @@ const TourDetails = () => {
                   </span>
 
                   <span>
-                    <i class="ri-map-pin-fill"></i>
+                    <i class="ri-map-pin-fill" />
                     {address}
                   </span>
                 </div>
 
                 <div className="tour__extra-details">
                   <span>
-                    <i class="ri-map-pin-2-line"></i> {city}
+                    <i class="ri-map-pin-2-line" /> {city}
                   </span>
                   <span>
-                    <i class="ri-money-dollar-circle-line"></i> ${price}/ per
+                    <i class="ri-money-dollar-circle-line" /> ${price}/ per
                     person
                   </span>
                   <span>
-                    <i class="ri-map-pin-time-line"></i> {distance}/miles
+                    <i class="ri-map-pin-time-line" /> {distance}/miles
                   </span>
                   <span>
-                    <i class="ri-group-line"></i> {maxGroupSize} people
+                    <i className="ri-group-line" /> {maxGroupSize} people
                   </span>
-                  <h5>Description</h5>
+                  {/* <h5>Description</h5> */}
                   <p>{desc}</p>
                 </div>
 

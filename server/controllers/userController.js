@@ -12,7 +12,8 @@ import User from '../models/User.js'
         res.status(404).json({ message: "User not found" });
       }
     } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to update User, try again" });
+      console.log(error)
+      res.status(500).json({ success: false, message: "Failed to update User, try again", error: error.message });
     }
   };
   
@@ -26,7 +27,8 @@ import User from '../models/User.js'
         res.status(404).json({ message: "User not found" });
       }
     } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to delete User, try again" });
+      console.log(error)
+      res.status(500).json({ success: false, message: "Failed to delete User, try again", error: error.message });
     }
   };
   
@@ -40,7 +42,8 @@ import User from '../models/User.js'
         res.status(404).json({ message: "User not found" });
       }
     } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to get single User, try again" });
+      console.log(error)
+      res.status(500).json({ success: false, message: "Failed to get single User, try again", error: error.message });
     }
   };
   
@@ -49,7 +52,8 @@ import User from '../models/User.js'
       const users = await User.find({});
       res.status(200).json({ success: true, message: "Successfully retrieved all users", data: users });
     } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to get all Users, try again" });
+      console.log(error)
+      res.status(500).json({ success: false, message: "Failed to get all Users, try again", error: error.message });
     }
   };
 
