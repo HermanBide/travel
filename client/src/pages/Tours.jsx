@@ -8,6 +8,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
+import TourDetails from "./TourDetails";
 
 const Tours = () => {
   const [pageCount, setPageCount] = useState(0);
@@ -36,7 +37,7 @@ const Tours = () => {
         <Container>
         {loading && <h4 className="text-center pt-5">Loading...</h4>}
         {error && <h4 className="text-center pt-5">{error}</h4>}
-        {/* { !loading && !error &&  */}
+        { !loading && !error && 
           <Row>
             {tours?.map((tour) => (
               <Col lg="3" md="6" sm="6" className='mb-4' key={tour._id}>
@@ -49,6 +50,7 @@ const Tours = () => {
                 {[...Array(pageCount).keys()].map((number) => (
                   <span
                     key={number}
+                    
                     onClick={() => setPage(number)}
                     className={page === number ? "active__page" : ""}
                   >
@@ -58,7 +60,7 @@ const Tours = () => {
               </div>
             </Col>
           </Row>
-        {/* } */}
+        }
         </Container>
       </section>
       <section className="pt-0">

@@ -19,16 +19,12 @@ const TourCard = ({ tour }) => {
         <CardBody>
           <div className="card__top d-flex align-items-center justify-content-between">
             <span className="tour__location d-flex align-items-center gap-1">
-              <i class="ri-map-pin-line" /> {city}
+              <i className="ri-map-pin-line" /> {city}
             </span>
 
             <span className="tour__rating d-flex align-items-center gap-1">
-              <i class="ri-star-s-fill" /> {avgRating === 0 ? null : avgRating}
-              {totalRating === 0 ? (
-                "Not rated"
-              ) : (
-                <span>({reviews.length}) </span>
-              )}
+              <i className="ri-star-s-fill" /> {avgRating}
+              {totalRating === 0 ? "Not rated" : <span>({reviews.length}) </span>}
             </span>
           </div>
 
@@ -45,9 +41,7 @@ const TourCard = ({ tour }) => {
               <Link to={`/tours/${_id}`}>Book Now</Link>
             </button>
           </div>
-          
         </CardBody>
-
       </Card>
     </div>
   );

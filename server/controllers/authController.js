@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from 'bcrypt'
 
 export const register = async (req, res) => {
     try {
@@ -9,7 +10,8 @@ export const register = async (req, res) => {
       await newUser.save();
       res.status(201).json({ success: true, message: "Successfully registered", data: newUser });
     } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to register, try again" });
+      console.error("Error registering user:", error);
+      res.status(500).json({ success: false, message: "Failed to register, try again", error: error.message });
     }
   };
   

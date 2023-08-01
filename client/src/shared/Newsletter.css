@@ -44,6 +44,10 @@ color: #fff !important;
 font-size: 1.1rem !important;
 }
 
+.newsletter__btn:hover {
+   color: #086375 !important;
+}
+
 .newsletter__content p {
     color: var(--text-color);
     font-size: 1.1rem;
