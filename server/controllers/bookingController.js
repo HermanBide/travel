@@ -1,22 +1,45 @@
 import Booking from "../models/Booking.js";
-import Tour from "../models/Tour.js";
+import { z } from 'zod';
+
+const bookingSchema = z.object({
+  userId: z.string().optional(),
+  userEmail: z.string().optional(),
+  tourName: z.string().min(1).max(100).refine((val) => val.trim() !== '', {
+    message: 'Tour name is required and must not be empty.',
+  }),
+  fullName: z.string().min(1).max(100).refine((val) => val.trim() !== '', {
+    message: 'Full name is required and must not be empty.',
+  }),
+  guestSize: z.number().min(1),
+  phone: z.string().min(1).max(20).refine((val) => val.trim() !== '', {
+    message: 'Phone number is required and must not be empty.',
+  }),
+  bookAt: z.date().optional(),
+});
 
 export const createBooking = async (req, res) => {
-  const newBooking = new Booking(req.body);
   try {
+    const bookingData = bookingSchema.parse(req.body);
+
+    const newBooking = new Booking({ ...bookingData });
     const savedBooking = await newBooking.save();
+
     res
       .status(200)
       .json({
         success: true,
-        message: "Your tour is booked",
+        message: 'Your tour is booked',
         data: savedBooking,
       });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res
       .status(500)
-      .json({ success: false, message: "Failed to book tour. try again!", error: error.message });
+      .json({
+        success: false,
+        message: 'Failed to book tour. try again!',
+        error: error.message,
+      });
   }
 };
 

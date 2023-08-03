@@ -1,6 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import { z } from 'zod';
 
-const userSchema = new mongoose.Schema(
+const userSchema = z.object({
+  username: z.string().min(4).max(30),
+  email: z.string().email(),
+  password: z.string().min(6),
+  photo: z.string().optional(),
+  role: z.enum(['user', 'admin']).default('user'),
+});
+
+const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -16,17 +25,25 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     photo: {
       type: String,
     },
-
     role: {
       type: String,
-      default: "user",
+      default: 'user',
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+UserSchema.pre('save', async function (next) {
+  try {
+    const validatedData = userSchema.parse(this.toObject());
+    return next();
+  } catch (error) {
+
+    return next(error);
+  }
+});
+
+export default mongoose.model('User', UserSchema);

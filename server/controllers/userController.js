@@ -1,21 +1,31 @@
 import User from '../models/User.js'
+import { z } from 'zod';
 
+const updateUserSchema = z.object({
+  username: z.string().min(1).max(100),
+  email: z.string().email(),
+  password: z.string().min(8), 
+  photo: z.string(),
+});
 
   
-  export const updateUser = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const updatedUser = await User.findByIdAndUpdate(id, { $set: req.body }, { new: true });
-      if (updatedUser) {
-        res.status(200).json({ success: true, message: "Successfully updated user", data: updatedUser });
-      } else {
-        res.status(404).json({ message: "User not found" });
-      }
-    } catch (error) {
-      console.log(error)
-      res.status(500).json({ success: false, message: "Failed to update User, try again", error: error.message });
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const validatedData = updateUserSchema.parse(req.body);
+
+    const updatedUser = await User.findByIdAndUpdate(id, { $set: validatedData }, { new: true });
+    if (updatedUser) {
+      res.status(200).json({ success: true, message: "Successfully updated user", data: updatedUser });
+    } else {
+      res.status(404).json({ message: "User not found" });
     }
-  };
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ success: false, message: "Failed to update User, try again", error: error.message });
+  }
+};
   
   export const deleteUser = async (req, res) => {
     try {

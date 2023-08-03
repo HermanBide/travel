@@ -12,7 +12,9 @@ const TourCard = ({ tour }) => {
     <div className="tour__card">
       <Card>
         <div className="tour__img">
-          <img src={photo} alt="tour-img" />
+        {photo && (
+          <img src={photo} alt={title} style={{ width: "300px", height: "200px" }} />
+        )}
           {featured && <span>Featured</span>}
         </div>
 

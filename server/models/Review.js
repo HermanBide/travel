@@ -1,10 +1,18 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import { z } from 'zod';
 
-const reviewSchema = new mongoose.Schema(
+const reviewSchema = z.object({
+  productId: z.string().nonempty(),
+  username: z.string().min(2).max(50),
+  reviewText: z.string().min(10),
+  rating: z.number().int().min(0).max(5).default(0),
+});
+
+const ReviewSchema = new mongoose.Schema(
   {
     productId: {
       type: mongoose.Types.ObjectId,
-      ref: "Tour",
+      ref: 'Tour',
     },
     username: {
       type: String,
@@ -25,4 +33,18 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Review", reviewSchema);
+ReviewSchema.pre('save', async function (next) {
+  try {
+    const validatedData = reviewSchema.parse(this.toObject());
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
+export default mongoose.model('Review', ReviewSchema);
+
+
+
+
+

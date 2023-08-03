@@ -1,6 +1,17 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import { z } from 'zod';
 
-const bookingSchema = new mongoose.Schema(
+const bookingSchema = z.object({
+  userId: z.string().nonempty(),
+  userEmail: z.string().email(),
+  tourName: z.string().nonempty(),
+  fullName: z.string().nonempty(),
+  guestSize: z.number().int().min(1),
+  phone: z.string().min(6).max(15),
+  bookAt: z.date(),
+});
+
+const BookingSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
@@ -21,7 +32,7 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
     phone: {
-      type: Number,
+      type: String,
       required: true,
     },
     bookAt: {
@@ -32,4 +43,13 @@ const bookingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Booking", bookingSchema);
+BookingSchema.pre('save', async function (next) {
+  try {
+    const validatedData = bookingSchema.parse(this.toObject());
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
+export default mongoose.model('Booking', BookingSchema);

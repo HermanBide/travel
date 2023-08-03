@@ -1,17 +1,33 @@
 import Tour from "../models/Tour.js";
+import { z } from 'zod'
 
+const tourSchema = z.object({
+  title: z.string().min(1).max(100).optional(),
+  city: z.string().min(1).max(50).optional(),
+  address: z.string().min(1).max(100).optional(),
+  distance: z.number().min(0).optional(),
+  photo: z.string().min(1).optional(),
+  desc: z.string().min(1).optional(),
+  price: z.number().min(0).optional(),
+  maxGroupSize: z.number().min(1).optional(),
+  featured: z.boolean().optional(),
+});
 
 export const createTour = async (req, res) => {
-  const newTour = new Tour(req.body);
   try {
+    const tourData = tourSchema.parse(req.body);
+    const newTour = new Tour(tourData);
+
     const saveTour = await newTour.save();
     res
       .status(200)
       .json({ success: true, message: "Successfully created", data: saveTour });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
-      message: " failed to create new tour, try again",
+      message: "Failed to create new tour, try again",
+      error: error.message,
     });
   }
 };
@@ -19,11 +35,14 @@ export const createTour = async (req, res) => {
 export const updateTour = async (req, res) => {
   try {
     const { id } = req.params;
+    const tourData = tourSchema.parse(req.body);
+
     const updatedTour = await Tour.findByIdAndUpdate(
       id,
-      { $set: req.body },
+      { $set: tourData },
       { new: true }
     );
+
     if (updatedTour) {
       res.status(200).json({
         success: true,
@@ -34,9 +53,12 @@ export const updateTour = async (req, res) => {
       res.status(404).json({ message: "Tour not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to update tour, try again" });
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update tour, try again",
+      error: error.message,
+    });
   }
 };
 
@@ -54,25 +76,32 @@ export const deleteTour = async (req, res) => {
       res.status(404).json({ message: "Tour not found" });
     }
   } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json({ success: false, message: "Failed to delete tour, try again" });
+      .json({
+        success: false,
+        message: "Failed to delete tour, try again",
+        error: error.message,
+      });
   }
 };
 
 export const getSingleTour = async (req, res) => {
   try {
     const { id } = req.params;
-    const tour = await Tour.findById(id).populate('reviews');
+    const tour = await Tour.findById(id).populate("reviews");
     if (tour) {
       res.status(200).json({ success: true, data: tour });
     } else {
       res.status(404).json({ message: "Tour not found" });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       message: "Failed to get single tour, try again",
+      error: error.message,
     });
   }
 };
@@ -81,7 +110,7 @@ export const getAllTour = async (req, res) => {
   const page = parseInt(req.query.page);
   try {
     const tours = await Tour.find({})
-      .populate('reviews')
+      .populate("reviews")
       .skip(page * 8)
       .limit(8);
     res.status(200).json({
@@ -91,9 +120,14 @@ export const getAllTour = async (req, res) => {
       data: tours,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json({ success: false, message: "Failed to get all tours, try again" });
+      .json({
+        success: false,
+        message: "Failed to get all tours, try again",
+        error: error.message,
+      });
   }
 };
 
@@ -107,27 +141,41 @@ export const getTourBySearch = async (req, res) => {
       city,
       distance: { $gte: distance },
       maxGroupSize: { $gte: maxGroupSize },
-    }).populate('reviews');
+    }).populate("reviews");
     res
       .status(200)
       .json({ success: true, message: "Successfully found", data: tours });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Tour not found" });
+    console.log(error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Tour not found",
+        error: error.message,
+      });
   }
 };
 
 export const getFeaturedTour = async (req, res) => {
   try {
-    const tours = await Tour.find({ featured: true }).populate('reviews').limit(8);
+    const tours = await Tour.find({ featured: true })
+      .populate("reviews")
+      .limit(8);
     res.status(200).json({
       success: true,
       message: "Successful",
       data: tours,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json({ success: false, message: "Failed to get all tours, try again" });
+      .json({
+        success: false,
+        message: "Failed to get all tours, try again",
+        error: error.message,
+      });
   }
 };
 
@@ -140,8 +188,13 @@ export const getTourCount = async (req, res) => {
       data: tourCount,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json({ success: false, message: "Failed to fetch" });
+      .json({
+        success: false,
+        message: "Failed to fetch",
+        error: error.message,
+      });
   }
 };

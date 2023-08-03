@@ -1,28 +1,43 @@
 import User from "../models/User.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { z } from 'zod';
+
+const userSchema = z.object({
+  username: z.string().min(4).max(20),
+  email: z.string().email(),
+  password: z.string().min(6),
+  photo: z.string().optional(),
+});
 
 export const register = async (req, res) => {
-    try {
-        const salt = bcrypt.genSaltSync(10)
-        const hash = bcrypt.hashSync(req.body.password, salt);
+  try {
+    const userData = userSchema.parse(req.body);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(userData.password, salt);
 
-      const newUser = new User({ username: req.body.username, email: req.body.email, password: hash, photo: req.body.photo});
-      await newUser.save();
-      res.status(201).json({ success: true, message: "Successfully registered", data: newUser });
-    } catch (error) {
-      console.error("Error registering user:", error);
-      res.status(500).json({ success: false, message: "Failed to register, try again", error: error.message });
-    }
-  };
+    const newUser = new User({
+      username: userData.username,
+      email: userData.email,
+      password: hash,
+      photo: userData.photo,
+    });
+
+    await newUser.save();
+    res.status(201).json({ success: true, message: "Successfully registered", data: newUser });
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res.status(500).json({ success: false, message: "Failed to register, try again", error: error.message });
+  }
+};
   
 
 
-
-
-  export const login = async (req, res) => {
+export const login = async (req, res) => {
   try {
-    const { email, password: inputPassword } = req.body; // Renamed 'password' to 'inputPassword'
+    const userData = userSchema.parse(req.body);
+
+    const { email, password: inputPassword } = userData; // Renamed 'password' to 'inputPassword'
     const user = await User.findOne({ email });
 
     if (!user) {
