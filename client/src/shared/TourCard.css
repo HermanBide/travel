@@ -100,4 +100,8 @@ font__size: 1rem;
     .booking__btn {
         font__size: 0.3rem 0.5rem !important;
         }
+
+        .tour__location, .tour__rating {
+            font-size: 
+        }
 }

@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
-import { z } from 'zod';
+// import { z } from 'zod';
 
-const bookingSchema = z.object({
-  userId: z.string().nonempty(),
-  userEmail: z.string().email(),
-  tourName: z.string().nonempty(),
-  fullName: z.string().nonempty(),
-  guestSize: z.number().int().min(1),
-  phone: z.string().min(6).max(15),
-  bookAt: z.date(),
-});
+// const bookingSchema = z.object({
+//   userId: z.string().nonempty(),
+//   userEmail: z.string().email(),
+//   tourName: z.string().nonempty(),
+//   fullName: z.string().nonempty(),
+//   guestSize: z.number().int().min(1),
+//   phone: z.string().min(6).max(15),
+//   bookAt: z.date(),
+// });
 
 const BookingSchema = new mongoose.Schema(
   {
@@ -43,13 +43,13 @@ const BookingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-BookingSchema.pre('save', async function (next) {
-  try {
-    const validatedData = bookingSchema.parse(this.toObject());
-    return next();
-  } catch (error) {
-    return next(error);
-  }
-});
+// BookingSchema.pre('save', async function (next) {
+//   try {
+//     const validatedData = bookingSchema.parse(this.toObject());
+//     return next();
+//   } catch (error) {
+//     return next(error);
+//   }
+// });
 
 export default mongoose.model('Booking', BookingSchema);

@@ -1,19 +1,10 @@
-import { z } from 'zod';
 import Review from '../models/Review.js';
 import Tour from '../models/Tour.js';
-
-const reviewSchema = z.object({
-  username: z.string().min(1).max(100).optional(),
-  reviewText: z.string().min(1).optional(),
-  rating: z.number().min(0).max(5).optional(),
-});
 
 export const createReview = async (req, res) => {
   const tourId = req.params.tourId;
   try {
-    const reviewData = reviewSchema.parse(req.body);
-
-    const newReview = new Review({ ...reviewData });
+    const newReview = new Review(req.body );
     const savedReview = await newReview.save();
 
     await Tour.findByIdAndUpdate(tourId, {

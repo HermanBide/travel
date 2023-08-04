@@ -1,3 +1,6 @@
+.rating__group span.selected {
+  color: #fbc02d; /* Set the desired color for the selected stars */
+}
 
 .tour__details-container {
     background-color: #f7f7f7;
@@ -143,4 +146,23 @@
 
   .btn:hover {
     color: var(--priamryS-color);
+  }
+
+  @media only screen and (Max-width: 768px) {
+    .tour__extra-details {
+      flex-wrap: wrap;
+      row-gap: 1rem;
+    }
+
+    .tour__extra-details span {
+      font-size: 0.9rem !important;
+    }
+
+    .tour__extra-details span i {
+      font-size: 1rem
+    }
+  }
+
+  @media only screen and (Max-width: 768px) {
+
   }

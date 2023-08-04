@@ -57,6 +57,10 @@ font-size: 1.1rem !important;
     .newsletter__content {
         font-size: 2rem;
     }
+
+    .newsletter__img {
+        display: none
+    }
 }
 
 @media only screen and (max-width: 576px) {

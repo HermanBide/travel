@@ -11,36 +11,60 @@ const Booking = ({ tour, avgRating }) => {
   const { user } = useContext(AuthContext);
 
   const [booking, setBooking] = useState({
-    userId: user?._iid,
+    userId: user?._id,
     userEmail: user?.email,
     tourName: title,
     fullName: "",
     phone: "",
     guestSize: 1,
-    bootAt: '',
+    bookAt: "",
   });
 
+  const [totalAmount, setTotalAmount] = useState(price);
+
   const handleChange = (e) => {
-    setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    const { id, value } = e.target;
+    setBooking((prev) => ({ ...prev, [id]: value }));
+  
+    // Calculate the total amount based on the price and guestSize
+    const guestSize = parseInt(value);
+    if (!isNaN(guestSize) && guestSize > 0) {
+      const total = price + serviceFee * guestSize;
+      setTotalAmount(total);
+    } else {
+      setTotalAmount(price);
+    }
   };
 
-  //send data to the server
   const handleClick = async (e) => {
     e.preventDefault();
-    navigate('/thank-you');
+    navigate("/thank-you");
 
     try {
       if (!user || user === undefined || user === null) {
-        return alert('Please sign in');
+        return alert("Please sign in");
       }
+
+      // Create the booking object to be sent to the server
+      const bookingData = {
+        userId: user?._id,
+        userEmail: user?.email,
+        tourName: title,
+        fullName: booking.fullName,
+        phone: booking.phone,
+        guestSize: booking.guestSize,
+        bookAt: booking.bookAt,
+      };
+
       const res = await fetch(`${BASE_URL}/booking`, {
-        method: 'post',
+        method: "post",
         headers: {
-          'content-type': 'application/json'
+          "content-type": "application/json",
         },
-        credentials: 'include',
-        body: JSON.stringify(booking)
+        credentials: "include",
+        body: JSON.stringify(bookingData), // Send the bookingData object as the request body
       });
+
       const result = await res.json();
       if (!res.ok) {
         return alert(result.message);
@@ -52,19 +76,16 @@ const Booking = ({ tour, avgRating }) => {
   };
 
   const serviceFee = 10;
-  const totalAmount = Number(price) * Number(booking.guestSize) + serviceFee;
 
   return (
     <div className="booking">
       <div className="booking__top d-flex align-items-center justify-content-between">
         <h3>${price} per/ person</h3>
         <span className="tour__rating d-flex align-items-center">
-          <i className="ri-star-s-fill"></i> {avgRating || "Not rated"} (
-          {reviews?.length})
+          <i className="ri-star-s-fill"></i>{" "}
+          {isNaN(avgRating) ? "Not rated" : avgRating} ({reviews?.length})
         </span>
       </div>
-
-      {/*====booking====*/}
 
       <div className="booking_form">
         <h5>Information</h5>
@@ -106,22 +127,23 @@ const Booking = ({ tour, avgRating }) => {
         </Form>
       </div>
 
-      {/*========*/}
-      <div className='booking__bottom'>
+      <div className="booking__bottom">
         <ListGroup>
-          <ListGroupItem className='border-0 px-0'>
-            <h5 className="d-flex align-items-center gap-1">${price} <i className='ri-close-line' /> 1 person </h5>
+          <ListGroupItem className="border-0 px-0">
+            <h5 className="d-flex align-items-center gap-1">
+              ${price} <i className="ri-close-line" /> 1 person{" "}
+            </h5>
             <span>${price}</span>
           </ListGroupItem>
 
-          <ListGroupItem className='border-0 px-0'>
+          <ListGroupItem className="border-0 px-0">
             <h5>Service charge </h5>
             <span>{serviceFee}</span>
           </ListGroupItem>
 
-          <ListGroupItem className='border-0 px-0 total'>
+          <ListGroupItem className="border-0 px-0 total">
             <h5>Total </h5>
-            <span>{totalAmount} </span>
+            <span>${isNaN(totalAmount) ? 0 : totalAmount }</span>
           </ListGroupItem>
         </ListGroup>
 

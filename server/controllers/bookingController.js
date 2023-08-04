@@ -1,27 +1,8 @@
 import Booking from "../models/Booking.js";
-import { z } from 'zod';
-
-const bookingSchema = z.object({
-  userId: z.string().optional(),
-  userEmail: z.string().optional(),
-  tourName: z.string().min(1).max(100).refine((val) => val.trim() !== '', {
-    message: 'Tour name is required and must not be empty.',
-  }),
-  fullName: z.string().min(1).max(100).refine((val) => val.trim() !== '', {
-    message: 'Full name is required and must not be empty.',
-  }),
-  guestSize: z.number().min(1),
-  phone: z.string().min(1).max(20).refine((val) => val.trim() !== '', {
-    message: 'Phone number is required and must not be empty.',
-  }),
-  bookAt: z.date().optional(),
-});
 
 export const createBooking = async (req, res) => {
   try {
-    const bookingData = bookingSchema.parse(req.body);
-
-    const newBooking = new Booking({ ...bookingData });
+    const newBooking = new Booking(req.body);
     const savedBooking = await newBooking.save();
 
     res

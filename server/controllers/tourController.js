@@ -1,23 +1,8 @@
 import Tour from "../models/Tour.js";
-import { z } from 'zod'
-
-const tourSchema = z.object({
-  title: z.string().min(1).max(100).optional(),
-  city: z.string().min(1).max(50).optional(),
-  address: z.string().min(1).max(100).optional(),
-  distance: z.number().min(0).optional(),
-  photo: z.string().min(1).optional(),
-  desc: z.string().min(1).optional(),
-  price: z.number().min(0).optional(),
-  maxGroupSize: z.number().min(1).optional(),
-  featured: z.boolean().optional(),
-});
 
 export const createTour = async (req, res) => {
   try {
-    const tourData = tourSchema.parse(req.body);
-    const newTour = new Tour(tourData);
-
+    const newTour = new Tour(req.body);
     const saveTour = await newTour.save();
     res
       .status(200)
@@ -35,11 +20,19 @@ export const createTour = async (req, res) => {
 export const updateTour = async (req, res) => {
   try {
     const { id } = req.params;
-    const tourData = tourSchema.parse(req.body);
+    const { title, desc, price, address, city, distance, maxGroupSize } = req.body;
 
     const updatedTour = await Tour.findByIdAndUpdate(
       id,
-      { $set: tourData },
+      {
+        title,
+        desc,
+        price,
+        address,
+        city,
+        distance,
+        maxGroupSize,
+      },
       { new: true }
     );
 

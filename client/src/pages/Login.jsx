@@ -20,20 +20,48 @@ const Login = () => {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   dispatch({ type: 'LOGIN_START' });
+  //   try {
+  //     const res = await fetch(`${BASE_URL}/auth/login`, {
+  //       method: 'post',
+  //       headers: {
+  //         'content-type': 'application/json'
+  //       },
+  //       credentials: 'include',
+  //       body: JSON.stringify({ email, password })
+  //     });
+  //     const result = await res.json();
+
+  //     if (!res.ok) {
+  //       alert(result.message);
+  //     } else {
+  //       dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
+  //       navigate("/");
+  //     }
+  //   } catch (error) {
+  //     dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
+  //     alert('Failed to login. Please try again later.');
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({ type: 'LOGIN_START' });
+  
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: 'post',
         headers: {
-          'content-type': 'application/json'
+          'Content-Type': 'application/json' // Correct the header field name
         },
         credentials: 'include',
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }) // Add the "username" field
       });
+      
       const result = await res.json();
-
+  
       if (!res.ok) {
         alert(result.message);
       } else {

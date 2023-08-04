@@ -68,6 +68,8 @@
     background-color: red;
 }
 
+
+
 @media only screen and (max-width: 992px) {
     .logo img{
         width: 20%;

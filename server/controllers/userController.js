@@ -4,7 +4,7 @@ import { z } from 'zod';
 const updateUserSchema = z.object({
   username: z.string().min(1).max(100),
   email: z.string().email(),
-  password: z.string().min(8), 
+  password: z.string().min(3), 
   photo: z.string(),
 });
 
