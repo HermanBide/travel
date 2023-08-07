@@ -17,7 +17,8 @@ import bookingRouter from './routes/bookingRoute.js'
 dotenv.config();
 const app = express();
 const corsOptions = {
-    origin: true,
+    origin: ["https://deploy-mern-1whq.vercel.app"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true
 }
 app.use(bodyParser.json({ limit: "30mb" }));
