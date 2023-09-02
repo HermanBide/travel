@@ -4,8 +4,9 @@
 Travel booking- a travel booking application to book trips 
 
 ## Technologies:
-- React
-- Nodejs
+- ReactJs
+- NodeJs
+- ExpressJs
 - MongoDB
 
 
